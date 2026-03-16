@@ -1,0 +1,37 @@
+# mlx-lm LoRA fine-tuning config
+# Run: uv run mlx_lm.lora --config configs/lora.yaml
+
+# ── Model ────────────────────────────────────────────────────────────────────
+model: "Qwen/Qwen3.5-0.8B"          # HF model id (will be downloaded automatically)
+
+# ── Data ─────────────────────────────────────────────────────────────────────
+train: true
+data: "data/processed"               # dir with train.jsonl / valid.jsonl
+
+# ── LoRA adapter ─────────────────────────────────────────────────────────────
+# num_layers: -1  → LoRA en TODAS las capas (más parámetros entrenables)
+# num_layers: 16  → LoRA solo en las últimas 16 capas (menos RAM)
+# Para full fine-tuning real se necesita >= 16 GB RAM (M2 Pro o superior)
+num_layers: 4        # M1 8 GB: 4 capas es el mínimo seguro
+lora_rank: 8
+lora_scale: 20.0
+lora_dropout: 0.0
+
+# ── Training hyperparams ─────────────────────────────────────────────────────
+batch_size: 1
+iters: 2000
+val_batches: 10
+learning_rate: 2e-5
+lr_schedule:
+  name: cosine_decay
+  warmup: 100
+  arguments: [2e-5, 2000, 1e-6]
+
+steps_per_report: 50
+steps_per_eval: 250
+save_every: 500
+max_seq_length: 512   # alineado con MAX_TOKENS en prepare_dataset.py
+grad_checkpoint: true
+
+# ── Output ───────────────────────────────────────────────────────────────────
+adapter_path: "outputs/adapters"

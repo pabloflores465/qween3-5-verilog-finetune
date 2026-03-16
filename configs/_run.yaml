@@ -1,0 +1,24 @@
+adapter_path: outputs/adapters
+batch_size: 1
+data: data/processed
+grad_checkpoint: true
+iters: 2000
+learning_rate: 2e-5
+lora_dropout: 0.0
+lora_rank: 8
+lora_scale: 20.0
+lr_schedule:
+  arguments:
+  - 2e-5
+  - 2000
+  - 1e-6
+  name: cosine_decay
+  warmup: 100
+max_seq_length: 512
+model: Qwen/Qwen3.5-0.8B
+num_layers: 4
+save_every: 500
+steps_per_eval: 250
+steps_per_report: 50
+train: true
+val_batches: 10

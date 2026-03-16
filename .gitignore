@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Datos de entrenamiento (repos clonados + datasets HF — muy pesados)
+data/raw/
+data/processed/
+
+# Checkpoints y pesos del modelo entrenado
+outputs/adapters/
+outputs/checkpoints/
+outputs/merged/
+outputs/gguf/
